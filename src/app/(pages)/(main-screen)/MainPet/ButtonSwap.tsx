@@ -10,7 +10,7 @@ const ButtonSwap = () => {
   const {setIsSwapPaged} = useAppContext()
 
   return (
-   <div className="h-full flex items-end  py-2">
+   <div className="w-[10%] h-full flex items-end justify-end py-2 ">
  <motion.button className=" w-[40px] h-[40px] "
  onClick={() => {
   console.log("OnCllick")

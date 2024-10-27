@@ -3,7 +3,7 @@ import React from 'react'
 
 const Item = ({img}: {img: StaticImageData}) => {
   return (
-    <div className="relative w-[90px] h-[90px] bg-no-repeat"
+    <div className="relative max-w-[90px] w-full h-[60px] sm:h-[90px] bg-no-repeat"
     style={{
       backgroundSize: "100% 100%",
       objectFit: "fill",

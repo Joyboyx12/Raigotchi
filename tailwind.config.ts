@@ -32,13 +32,16 @@ const config: Config = {
 			'top-frame': "url('/Top_Frame.png')",
 			'bg': "url('/BG.png')",
 			'pet-bg': "url('/Pet_Background.png')",
-			'pet-tab': "url('/Pet_Tab.png')",
 			'shop-tab': "url('/Shop_Tab.png')",
 			'shop-tab-full': "url('/Shop_Tab_Full.png')",
 			'pet_swap_header':"url('/Pet_swap_Header.png')",
 			'pet_swap_tab':"url('/Pet_swap_Tab.png')",
 			'item-box': "url('/ItemBox.png')",
 			'price-box': "url('/Price_Box.png')",
+			'pet-tab-box': "url('/Pet_Tab_Box.png')",
+			'pet-tab-bg': "url('/Pet_Tab_Bg.png')",
+
+
 
 
 
