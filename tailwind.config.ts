@@ -35,7 +35,8 @@ const config: Config = {
 			'pet-tab': "url('/Pet_Tab.png')",
 			'shop-tab': "url('/Shop_Tab.png')",
 			'shop-tab-full': "url('/Shop_Tab_Full.png')",
-
+			'pet_swap_header':"url('/Pet_swap_Header.png')",
+			'pet_swap_tab':"url('/Pet_swap_Tab.png')",
 			'item-box': "url('/ItemBox.png')",
 			'price-box': "url('/Price_Box.png')",
 

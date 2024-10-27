@@ -3,7 +3,7 @@ import Item from '@/app/(pages)/(main-screen)/MainPage.tsx/Item'
 import PriceItem from '@/app/(pages)/(main-screen)/MainPage.tsx/PriceItem'
 import imgs_decor from '@/assets/accessories/Decor'
 import imgs_item from '@/assets/main-screen/Items'
-import imgs_pet_small from '@/assets/pet/Pet_Small'
+import imgs_pet_small from '@/assets/pet/PetSmall'
 import Image from 'next/image'
 import React from 'react'
 

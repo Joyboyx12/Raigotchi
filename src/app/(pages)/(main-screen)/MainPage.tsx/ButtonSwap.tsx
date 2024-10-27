@@ -14,9 +14,9 @@ const ButtonSwap = () => {
    }}
    transition={{ duration: 0.5, yoyo: Infinity }}
    >
-     {/* <div className="relative w-[20] h-[20]"> */}
+    
        <Image alt="swap" src={imgs_main_screen.img_swap_button} width={40} height={40}/>
-     {/* </div> */}
+    
    </motion.button>
 
    </div>

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 const BottomFrame = () => {
   return (
-    <div className="flex gap-2 w-full h-[150px]  py-3 px-2 bg-[url('/Bottom_Frame.png')] bg-no-repeat bg-cover ">
+    <div className="flex flex-shrink-0 gap-2 w-full h-[120px]  py-3 px-2 bg-[url('/Bottom_Frame.png')] bg-no-repeat bg-cover ">
       <div className="w-[37.5%] h-full flex gap-2 py-3">
         <motion.div className="relative w-full h-full cursor-pointer"
          whileHover={{
