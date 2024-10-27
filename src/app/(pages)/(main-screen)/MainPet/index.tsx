@@ -1,39 +1,18 @@
-import ButtonSwap from '@/app/(pages)/(main-screen)/MainPage.tsx/ButtonSwap'
-import Item from '@/app/(pages)/(main-screen)/MainPage.tsx/Item'
-import PriceItem from '@/app/(pages)/(main-screen)/MainPage.tsx/PriceItem'
+import ButtonSwap from '@/app/(pages)/(main-screen)/MainPet/ButtonSwap'
+import Item from '@/app/(pages)/(main-screen)/MainPet/Item'
+import PetView from '@/app/(pages)/(main-screen)/MainPet/PetView'
+import PriceItem from '@/app/(pages)/(main-screen)/MainPet/PriceItem'
 import imgs_decor from '@/assets/accessories/Decor'
 import imgs_item from '@/assets/main-screen/Items'
 import imgs_pet_small from '@/assets/pet/PetSmall'
 import Image from 'next/image'
 import React from 'react'
 
-const MainPage = () => {
+const MainPet = () => {
   return (
     <div className="w-full h-full flex flex-col gap-5 ">
       {/* Pet */}
-      <div
-        className="w-full h-[300px] bg-no-repeat flex flex-col items-center justify-center"
-        style={{
-          backgroundSize: "100% 100%",
-          objectFit: "fill",
-          backgroundImage: `url('/Pet_Background.png')`,
-        }}
-      >
-        <div className="w-full flex justify-end px-6">
-          <p className="font-bold text-xl">TOD: 23h38m25s</p>
-        </div>
-        <div className="relative w-[200px] h-[200px]">
-          <Image
-            alt="pet"
-            src={imgs_decor.glass_pet_idl}
-            sizes="100%"
-            fill
-            objectFit="contain"
-          />
-        </div>
-
-        <p className="font-bold text-2xl">Pet Name</p>
-      </div>
+    <PetView/>
       {/* Profile */}
       <div className="w-full px-2">
         <div
@@ -66,7 +45,7 @@ const MainPage = () => {
               <p>SCORE: 0</p>
             </div>
           </div>
-          <ButtonSwap/>
+          <ButtonSwap />
         </div>
       </div>
 
@@ -103,4 +82,4 @@ const MainPage = () => {
   )
 }
 
-export default MainPage
+export default MainPet

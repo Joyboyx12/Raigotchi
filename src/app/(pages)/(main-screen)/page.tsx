@@ -1,13 +1,8 @@
-import ChoosePet from "@/app/(pages)/(main-screen)/ChoosePet";
-import MainPage from "@/app/(pages)/(main-screen)/MainPage.tsx";
+import HomePage from "@/app/(pages)/(main-screen)/HomePage";
 
 
 export default function Home() {
   return (
-<>
-{/* <MainPage/> */}
-<ChoosePet/>
-
-</>
+<HomePage/>
   );
 }
