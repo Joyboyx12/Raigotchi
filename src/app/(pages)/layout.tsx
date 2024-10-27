@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/app/globals.css"
+import "@/app/globals.css";
 import BottomFrame from "@/components/shared/BottomFrame";
 import TopFrame from "@/components/shared/TopFrame";
+import ThirdAppProvider from "@/providers/ThirdAppProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,17 +21,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <div className="w-full h-[100vh] flex items-center justify-center bg-black">
-    <div className="max-w-screen-xs w-full h-full bg-white flex flex-col justify-between bg-[url('/BG.png')] bg-no-repeat bg-cover bg-center gap-3">
-      <TopFrame/>
-    {children}
+       <ThirdAppProvider>
+       <div className="w-full h-[100vh] flex items-center justify-center bg-black">
+            <div className="max-w-screen-xs w-full h-full bg-white flex flex-col justify-between bg-[url('/BG.png')] bg-no-repeat bg-cover bg-center gap-3">
+              <TopFrame />
+              {children}
 
-      <BottomFrame/>
-    </div>
-  </div>
-
-        
-        </body>
+              <BottomFrame />
+            </div>
+          </div>
+       </ThirdAppProvider>
+          
+       
+      </body>
     </html>
   );
 }
