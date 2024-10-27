@@ -40,6 +40,19 @@ const config: Config = {
 			'pet_swap_box_2':"url('/Swap_Box_2.png')",
 			'pet_swap_box_4':"url('/Swap_Box_4.png')",
 
+			'battle_header':"url('/Battle_Header.png')",
+			'battle_bg':"url('/Battle_BG.png')",
+			'battle_pet_infor':"url('/Battle_Pet_Infor.png')",
+			'battle_log_tab':"url('/Battle_Log_Tab.png')",
+			'battle_win':"url('/Battle_Win.png')",
+			'battle_lost':"url('/Battle_Lost.png')",
+			'battle_draw':"url('/Battle_Draw.png')",
+
+
+
+
+
+
 			
 
 
