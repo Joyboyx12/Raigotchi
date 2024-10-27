@@ -1,9 +1,13 @@
-import Image from "next/image";
+import ChoosePet from "@/app/(pages)/(main-screen)/ChoosePet";
+import MainPage from "@/app/(pages)/(main-screen)/MainPage.tsx";
+
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      
-    </main>
+<>
+<MainPage/>
+{/* <ChoosePet/> */}
+
+</>
   );
 }
