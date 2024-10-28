@@ -52,6 +52,19 @@ const config: Config = {
 			'mint_section_tab':"url('/Mint_SectionTab.png')",
 			'mint_small_tab':"url('/Mint_SmallTab.png')",
 			'mint_confirm_menu':"url('/Mint_Confirm_Menu.png')",
+			'accessories_tab_active': "url('/AccessoriesTab_Active.png')",
+			'background_tab_active': "url('/BackgroundTab_Active.png')",
+			'decorations_tab_active': "url('/DecorationsTab_Active.png')",
+			'shop_decorations_menu': "url('/Shop_Decorations_Menu.png')",
+			'shop_accessories_menu': "url('/Shop_Accessories_Menu.png')",
+			'shop_background_menu': "url('/Shop_Backgrounds_Menu.png')",
+			'shop_bottom_tab': "url('/Shop_Bottom_Tab.png')",
+
+
+
+
+
+
 	
 
 
@@ -72,6 +85,10 @@ const config: Config = {
 
 			'item-box': "url('/ItemBox.png')",
 			'price-box': "url('/Price_Box.png')",
+			'price-box_2': "url('/Price_Box_2.png')",
+			'price-box_3': "url('/Price_Box_3.png')",
+
+
 			'pet-tab-box': "url('/Pet_Tab_Box.png')",
 			'pet-tab-bg': "url('/Pet_Tab_Bg.png')",
 

@@ -21,7 +21,7 @@ const PetView = () => {
       }}
     >
       <div className="w-full flex justify-end px-6">
-        <p className="font-bold text-xl">TOD: 23h38m25s</p>
+        <p className="font-bold text-4xl">TOD: 23h38m25s</p>
       </div>
 
       <div className="w-full h-full px-20">
