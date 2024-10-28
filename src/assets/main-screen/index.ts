@@ -7,7 +7,7 @@ import img_item_box from './ItemBox.png'
 import img_pet_tab from './Pet_Tab.png'
 import img_price_box from './Price_Box.png'
 import img_shop_tab_full from './Shop_Tab_Full.png'
-import img_shop_tab from './Shop_tab.png'
+import img_shop_tab from './Shop_Tab.png'
 
 
 
