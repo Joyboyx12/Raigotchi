@@ -47,6 +47,19 @@ const config: Config = {
 			'battle_win':"url('/Battle_Win.png')",
 			'battle_lost':"url('/Battle_Lost.png')",
 			'battle_draw':"url('/Battle_Draw.png')",
+			'mint_coin_tab':"url('/Mint_Coin_Tab.png')",
+			'mint_big_tab':"url('/Mint_Big_Tab.png')",
+			'mint_section_tab':"url('/Mint_SectionTab.png')",
+			'mint_small_tab':"url('/Mint_SmallTab.png')",
+			'mint_confirm_menu':"url('/Mint_Confirm_Menu.png')",
+	
+
+
+
+
+
+
+
 
 
 

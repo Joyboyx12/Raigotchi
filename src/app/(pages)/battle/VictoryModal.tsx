@@ -20,7 +20,7 @@ export function VictoryModal() {
       {/* <DialogTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DialogTrigger> */}
-      <DialogContent className="sm:max-w-[425px] h-[500px] p-0 bg-transparent border-none"
+      <DialogContent className="sm:max-w-[425px] h-[400px] p-0 bg-transparent border-none"
       
       >
         <DialogHeader>
@@ -29,15 +29,13 @@ export function VictoryModal() {
             {/* Make changes to your profile here. Click save when you're done. */}
           </DialogDescription>
         </DialogHeader>
-        <div  className="flex w-full  h-[400px] bg-no-repeat"
+        <div  className="flex w-full  h-[350px] bg-no-repeat"
         style={{
           backgroundSize: "100% 100%",
           objectFit: "fill",
           backgroundImage: `url('/Battle_Win.png')`,
         }}>
-          <div className="grid grid-cols-4 items-center gap-4">
-            
-          </div>
+        
         </div>
         <div className="flex w-full items-center justify-center">
         <button

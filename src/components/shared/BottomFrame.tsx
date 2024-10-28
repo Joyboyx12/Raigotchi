@@ -27,8 +27,11 @@ const BottomFrame = () => {
             objectFit="fill"
           />
         </motion.div>
-        <motion.div
+        <motion.button
           className="relative w-full h-full  cursor-pointer"
+          onClick={() => {
+            route.push("/mint");
+          }}
           whileHover={{
             scale: 1.05,
           }}
@@ -41,7 +44,7 @@ const BottomFrame = () => {
             fill
             objectFit="fill"
           />
-        </motion.div>
+        </motion.button>
       </div>
 
       <motion.button
