@@ -59,6 +59,12 @@ const config: Config = {
 			'shop_accessories_menu': "url('/Shop_Accessories_Menu.png')",
 			'shop_background_menu': "url('/Shop_Backgrounds_Menu.png')",
 			'shop_bottom_tab': "url('/Shop_Bottom_Tab.png')",
+			'mission_header':"url('/Mission_Header.png')",
+
+			'mission_tab':"url('/Mission_Tab.png')",
+			'mission_box':"url('/Mission_Box.png')",
+			'mission_icon_box':"url('/Mission_Icon_Box.png')",
+
 
 
 

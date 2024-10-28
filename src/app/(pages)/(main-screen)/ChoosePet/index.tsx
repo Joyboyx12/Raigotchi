@@ -7,7 +7,8 @@ const ChoosePet = () => {
     <>
       {/* Header */}
        
-      <div
+   <div className='w-full px-2'>
+   <div
           className="flex w-full h-[120px] bg-no-repeat py-5 px-6 gap-7 flex-shrink-0"
           style={{
             backgroundSize: "100% 100%",
@@ -16,6 +17,7 @@ const ChoosePet = () => {
           }}
         >
       </div >
+   </div>
       <div className="w-full h-full flex flex-col  gap-3 px-2  overflow-y-scroll " style={{
             scrollbarWidth:'none'
           }}>
