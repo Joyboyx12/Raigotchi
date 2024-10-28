@@ -43,9 +43,9 @@ const MainPet = () => {
             </div>
           </div>
 
-          <div className="w-full text-white flex flex-col  justify-center font-bold text-xs sm:text-xl">
-            <p>RAI</p>
-            <div className="flex gap-5">
+          <div className="w-full text-white flex flex-col   font-bold text-xl sm:text-[40px] leading-7">
+            <p className="">RAI</p>
+            <div className="flex gap-5 ">
               <p>ATK: 100</p>
               <p>STATUS: HAPPY</p>
             </div>

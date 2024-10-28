@@ -11,7 +11,7 @@ const PriceItem = ({
 }) => {
   return (
     <div className="w-full flex flex-col gap-2 text-center items-center justify-center">
-      <p className="text-base w-[50%] leading-4 h-7 flex items-center justify-center">
+      <p className="text-base w-[50%] leading-4 h-7 flex items-center justify-center text-4xl">
         {nameItem}
       </p>
       <div
@@ -22,7 +22,7 @@ const PriceItem = ({
           backgroundImage: `url('/Price_Box.png')`,
         }}
       >
-        <p>5</p>
+        <p className="text-4xl pb-2">5</p>
         <Image
           alt="coin"
           src={imgs_main_screen.img_coin_icon}

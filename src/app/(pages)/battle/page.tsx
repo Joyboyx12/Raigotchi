@@ -62,7 +62,7 @@ const BattlePage = () => {
             backgroundImage: `url('/Battle_Pet_Infor.png')`,
           }}
         >
-          <div className="w-full flex items-center justify-between pl-5 ">
+          <div className="w-full flex items-center justify-between pl-5 text-4xl leading-5 ">
             <div className="flex flex-col gap-1 font-bold">
               <p>RAI</p>
               <div className="flex gap-4">
@@ -96,8 +96,8 @@ const BattlePage = () => {
                 style={{ transform: "scale(-1, 1)" }}
               />
             </div>
-            <div className="flex flex-col gap-1 font-bold">
-              <p>RAI</p>
+            <div className="flex flex-col gap-1 font-bold text-4xl leading-5">
+              <p className="">RAI</p>
               <div className="flex gap-4">
                 <p>ATK: 100</p>
                 <p>STATUS: HAPPY</p>
@@ -122,7 +122,7 @@ const BattlePage = () => {
             backgroundImage: `url('/Battle_Log_Tab.png')`,
           }}
         >
-          <p className="font-bold text-xl">sadajsdhajksdhajk</p>
+          <p className="font-bold text-4xl leading-5">sadajsdhajksdhajk</p>
 
         <div className="h-full flex items-end justify-end">
         <button>

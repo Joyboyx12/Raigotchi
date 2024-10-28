@@ -12,8 +12,12 @@ const BottomFrame = () => {
   return (
     <div className="flex flex-shrink-0 gap-2 w-full h-[120px]  py-3 px-2 bg-[url('/Bottom_Frame.png')] bg-no-repeat bg-cover ">
       <div className="w-[37.5%] h-full flex gap-2 py-3">
-        <motion.div
+        <motion.button
           className="relative w-full h-full cursor-pointer"
+          onClick={() => {
+            setIsSwapPaged(false);
+            route.push("/");
+          }}
           whileHover={{
             scale: 1.05,
           }}
@@ -26,7 +30,7 @@ const BottomFrame = () => {
             fill
             objectFit="fill"
           />
-        </motion.div>
+        </motion.button>
         <motion.button
           className="relative w-full h-full  cursor-pointer"
           onClick={() => {
@@ -69,10 +73,9 @@ const BottomFrame = () => {
       <div className="w-[37.5%] h-full flex gap-2 py-3">
         <motion.button
           className="relative w-full h-full  cursor-pointer"
-          onClick={() => {
-            setIsSwapPaged(false);
-            route.push("/");
-          }}
+         onClick={() => {
+          route.push("/accessories");
+         }}
           whileHover={{
             scale: 1.05,
           }}
@@ -87,8 +90,11 @@ const BottomFrame = () => {
           />
         </motion.button>
 
-        <motion.div
+        <motion.button
           className="relative w-full h-full  cursor-pointer"
+          onClick={() => {
+            route.push("/user-profile");
+           }}
           whileHover={{
             scale: 1.05,
           }}
@@ -101,7 +107,7 @@ const BottomFrame = () => {
             fill
             objectFit="fill"
           />
-        </motion.div>
+        </motion.button>
       </div>
     </div>
   );
