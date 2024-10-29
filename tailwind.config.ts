@@ -64,6 +64,9 @@ const config: Config = {
 			'mission_tab':"url('/Mission_Tab.png')",
 			'mission_box':"url('/Mission_Box.png')",
 			'mission_icon_box':"url('/Mission_Icon_Box.png')",
+			'user_wallet_tab':"url('/User_Screen_Wallet_Tab.png')",
+			'user_wallet_address_tab':"url('/User_Screen_Wallet_Address_Tab.png')",
+			'user_invite_tab':"url('/User_Screen_Invite_Tab.png')",
 
 
 

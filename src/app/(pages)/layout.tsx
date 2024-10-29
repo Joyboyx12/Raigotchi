@@ -36,14 +36,7 @@ export default function RootLayout({
             <MainLayout>
               {children}
             </MainLayout>
-            {/* <div className="w-full h-[100vh] flex items-center justify-center bg-black">
-              <div className="max-w-screen-xs w-full h-full bg-white flex flex-col justify-between bg-[url('/BG.png')] bg-no-repeat bg-cover bg-center gap-3 font-[family-name:var(--font-tiny-unicode)] text-white">
-                <TopFrame />
-                {children}
-
-                <BottomFrame />
-              </div>
-            </div> */}
+       
           </AppProvider>
         </ThirdAppProvider>
       </body>
