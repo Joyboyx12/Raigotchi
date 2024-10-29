@@ -2,12 +2,14 @@ import { VictoryModal } from "@/app/(pages)/battle/VictoryModal";
 import imgs_decor from "@/assets/accessories/Decor";
 import imgs_battle from "@/assets/battle-screen/Battle";
 import imgs_pet_small from "@/assets/pet/PetSmall";
+import MainLayout from "@/components/shared/MainLayout";
 import Image from "next/image";
 import React from "react";
 
 const BattlePage = () => {
   return (
-    <div className="w-full h-full flex flex-col gap-2">
+    <MainLayout>
+      <div className="w-full h-full flex flex-col gap-2">
         <VictoryModal/>
       {/* Header */}
 
@@ -137,6 +139,7 @@ const BattlePage = () => {
         </div>
       </div>
     </div>
+    </MainLayout>
   );
 };
 
