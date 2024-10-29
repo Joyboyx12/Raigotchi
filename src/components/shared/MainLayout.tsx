@@ -8,14 +8,7 @@ export interface IMainLayoutProps {
 }
 
 export default function MainLayout({ children }: Readonly<IMainLayoutProps>) {
-  // const { isConnected } = useAccount();
-  // const { openConnectModal } = useConnectModal();
 
-  // React.useEffect(() => {
-  //   if (!isConnected && openConnectModal) {
-  //     openConnectModal();
-  //   }
-  // }, [isConnected]);
   const address = useAddress();
   return (
     <>

@@ -1,10 +1,13 @@
 import imgs_user_infor from "@/assets/user-infor/Assets";
+import UserLayout from "@/components/shared/UserLayout";
 import Image from "next/image";
 import React from "react";
 
 const UserProfilePage = () => {
   return (
-    <>
+
+    <UserLayout>
+       <>
       <div className="flex flex-col items-center gap-5 w-full h-full px-2 ">
         {/* wallet */}
         <div
@@ -94,6 +97,8 @@ const UserProfilePage = () => {
         </button>
       </div>
     </>
+    </UserLayout>
+   
   );
 };
 

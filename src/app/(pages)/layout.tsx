@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
-import BottomFrame from "@/components/shared/BottomFrame";
-import TopFrame from "@/components/shared/TopFrame";
 import ThirdAppProvider from "@/providers/ThirdAppProvider";
 import AppProvider from "@/contexts/AppContext";
 import localFont from "next/font/local";
-import MainLayout from "@/components/shared/MainLayout";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,9 +31,8 @@ export default function RootLayout({
       <body className={`${tinyUnicode.variable}  antialiased`}>
         <ThirdAppProvider>
           <AppProvider>
-            <MainLayout>
+            
               {children}
-            </MainLayout>
        
           </AppProvider>
         </ThirdAppProvider>
