@@ -67,6 +67,8 @@ const config: Config = {
 			'user_wallet_tab':"url('/User_Screen_Wallet_Tab.png')",
 			'user_wallet_address_tab':"url('/User_Screen_Wallet_Address_Tab.png')",
 			'user_invite_tab':"url('/User_Screen_Invite_Tab.png')",
+			'mint_menu_choose_pet_tab':"url('/Mint_Menu_Choose_Pet_Tab.png')",
+			'mint_menu_choose_pet_stats_tab':"url('/Mint_Menu_Choose_Pet_Stats_Tab.png')",
 
 
 
