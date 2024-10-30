@@ -1,24 +1,24 @@
+import LogoutButton from "@/app/(pages)/user-profile/LogoutButton";
+import WalletAddressTab from "@/app/(pages)/user-profile/WalletAddressTab";
 import imgs_user_infor from "@/assets/user-infor/Assets";
 import UserLayout from "@/components/shared/UserLayout";
 import Image from "next/image";
 import React from "react";
 
 const UserProfilePage = () => {
+
+
+
   return (
 
     <UserLayout>
        <>
       <div className="flex flex-col items-center gap-5 w-full h-full px-2 ">
         {/* wallet */}
-        <div
-          className="flex w-full h-[150px] bg-no-repeat py-5 px-6 gap-7 flex-shrink-0"
-          style={{
-            backgroundSize: "100% 100%",
-            objectFit: "fill",
-            backgroundImage: `url('/User_Screen_Wallet_Address_Tab.png')`,
-          }}
-        ></div>
+       
+<WalletAddressTab/>
 
+{/* invite */}
         <div className="w-full flex gap-2">
           <div
             className="flex w-full h-[150px] bg-no-repeat py-5 px-6 gap-7 "
@@ -46,15 +46,10 @@ const UserProfilePage = () => {
             backgroundImage: `url('/User_Screen_Wallet_Tab.png')`,
           }}
         ></div>
+{/* logout */}
 
-        <button>
-          <Image
-            alt="logout"
-            src={imgs_user_infor.img_logout_button}
-            width={200}
-            className="h-auto" // This will set height to auto
-          />
-        </button>
+<LogoutButton/>
+      
       </div>
       <div className="flex  flex-col gap-2 w-full h-[320px]  py-3 px-2 bg-[url('/Bottom_Frame.png')] bg-no-repeat bg-cover text-black font-bold text-4xl">
         <button className="flex items-center  gap-2">
