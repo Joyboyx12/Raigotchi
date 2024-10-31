@@ -83,13 +83,13 @@ const PetViewMint = ({
                     <div className="relative w-[170px] h-[170px]">
                       <Image
                         alt="pet"
-                        src={pet.image ?? imgs_decor.glass_pet_idl}
+                        src={pet.image || imgs_decor.glass_pet_idl}
                         sizes="100%"
                         fill
                         objectFit="contain"
                       />
                     </div>
-                    <p className=" text-4xl">{pet.name ?? "Pet Name"}</p>
+                    <p className=" text-4xl">{pet.name || "Pet Name"}</p>
                     
                   </div>
                 </CarouselItem>

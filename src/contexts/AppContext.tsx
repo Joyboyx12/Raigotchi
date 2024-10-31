@@ -2,6 +2,7 @@
 
 import { addressContracts } from "@/lib/utils";
 import { useAddress, useContract } from "@thirdweb-dev/react";
+import { StaticImageData } from "next/image";
 import React, {
   createContext,
   ReactNode,
@@ -12,7 +13,7 @@ import React, {
 
 export interface IPets {
   id: number;
-  image: string;
+  image: string | StaticImageData;
   name: string;
   attackPoints: any;
   defensePoints: any;
@@ -21,7 +22,7 @@ export interface IPets {
 
 export interface IPetByOwner {
   _id: number;
-  _image: string;
+  _image: string | StaticImageData;
   _name: string;
   _status: any;
   _score: any;
@@ -38,16 +39,23 @@ const AppContext = createContext<{
   user: any | null;
   isSwapPage: boolean;
   currentPet: IPetByOwner | null;
+  currentPetFight: IPetByOwner | null;
+
   petsByOwner: IPetByOwner[];
   speciesData: IPets[];
   currentPetSpecies: IPets | null;
+  step: number;
   setCurrentPetSpecies: (currentPetSpecies: IPets) => void;
   setSpeciesData: (species: IPets[]) => void;
   setPetsByOwner: (petsByOwner: IPetByOwner[]) => void;
   setCurrentPet: (currentPet: IPetByOwner) => void;
+  setCurrentPetFight: (currentPet: IPetByOwner) => void;
+
   setUser: (user: any | null) => void;
   setIsSwapPaged: (isSwap: boolean) => void;
   handleGetInforByOwner: () => void;
+  nextStep: () => void;
+  setStep:(step:number) =>void
 }>({
   user: null,
   isSwapPage: false,
@@ -55,13 +63,20 @@ const AppContext = createContext<{
   petsByOwner: [],
   speciesData: [],
   currentPetSpecies: null,
+  step: 1,
+  currentPetFight: null,
   setCurrentPetSpecies: () => {},
   setSpeciesData: () => {},
   setPetsByOwner: () => {},
   setCurrentPet: () => {},
+  setCurrentPetFight: () => {},
+
   setUser: () => {},
   setIsSwapPaged: () => {},
   handleGetInforByOwner: () => {},
+  nextStep: () => {},
+  setStep: () => {},
+
 });
 
 export const useAppContext = () => {
@@ -99,6 +114,8 @@ const AppProvider = ({
   const { contract: contractGenePoll } = useContract(addressContracts.genePool);
 
   const [currentPet, setCurrentPet] = React.useState<IPetByOwner | null>(null);
+  const [currentPetFight, setCurrentPetFight] =
+    React.useState<IPetByOwner | null>(null);
 
   const [petsByOwner, setPetsByOwner] = useState<IPetByOwner[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -106,7 +123,14 @@ const AppProvider = ({
   const [currentPetSpecies, setCurrentPetSpecies] =
     React.useState<IPets | null>(null);
 
-  const [speciesData, setSpeciesData] = useState<IPets[]>([]);
+  const [speciesData, setSpeciesData] = React.useState<IPets[]>([]);
+
+  const [step, setStep] = React.useState(1);
+
+  function nextStep() {
+    if (step === 3) return;
+    setStep((prev) => prev + 1);
+  }
 
   const handleGetSpeciesEvolutionPhaseInfo = async () => {
     if (!contractGenePoll) return;
@@ -194,12 +218,18 @@ const AppProvider = ({
   return (
     <AppContext.Provider
       value={{
+        currentPetFight,
         user,
         isSwapPage,
         currentPet,
         petsByOwner,
         currentPetSpecies,
         speciesData,
+        step,
+        setCurrentPetFight,
+        nextStep,
+        setStep,
+
         setCurrentPetSpecies,
         setSpeciesData,
         handleGetInforByOwner,

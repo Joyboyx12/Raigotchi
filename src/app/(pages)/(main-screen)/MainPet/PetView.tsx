@@ -87,7 +87,7 @@ const PetView = ({
                       objectFit="contain"
                     />
                   </div>
-                  <p className=" text-5xl">{pet._name ?? "Pet Name"}</p>
+                  <p className=" text-5xl">{pet._name || "Pet Name"}</p>
                 </div>
               </CarouselItem>
             ))}

@@ -42,7 +42,7 @@ const ChoosePetBattle = () => {
   
 
 
-  const {petsByOwner,setCurrentPet,currentPet} = useAppContext()
+  const {petsByOwner,setCurrentPet,currentPet, nextStep} = useAppContext()
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full h-full px-2">
       {petsByOwner.length <= 0 ? (
@@ -80,7 +80,13 @@ const ChoosePetBattle = () => {
               )}
             </div>
           </div>
-          <button>
+          <button
+          onClick={() => {
+            nextStep()
+            console.log("currentPet",currentPet)
+          }
+          }
+          >
             <Image
               alt="logout"
               src={imgs_select_pet_battle.img_select_battlet}

@@ -14,7 +14,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import Image from "next/image";
 import { useState } from "react";
 
-export function VictoryModal() {
+export function LoserModal() {
     const [isDialogOpen, setIsDialogOpen] = useState(true);
     const {setStep} = useAppContext();
   return (
@@ -35,15 +35,14 @@ export function VictoryModal() {
         style={{
           backgroundSize: "100% 100%",
           objectFit: "fill",
-          backgroundImage: `url('/Battle_Win.png')`,
+          backgroundImage: `url('/Battle_Lost.png')`,
         }}>
         
         </div>
         <div className="flex w-full items-center justify-center">
         <button
-        onClick={() => {
-        setStep(1),
-          
+        onClick={() =>{
+          setStep(1);
           setIsDialogOpen(false)}}
         >
             <Image
