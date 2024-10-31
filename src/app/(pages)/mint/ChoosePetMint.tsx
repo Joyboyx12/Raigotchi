@@ -23,6 +23,7 @@ export interface IPets {
 }
 
 export interface IPetByOwner {
+  _id: number;
   _image: string;
   _name: string;
   _status: any;
@@ -120,6 +121,7 @@ const ChoosePetMint = () => {
 
         fetchedData.push({
           ...data,
+          _id: Number(element),
           _image: image,
         });
       });

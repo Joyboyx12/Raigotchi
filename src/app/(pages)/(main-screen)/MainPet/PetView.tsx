@@ -10,16 +10,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { IPets } from "@/app/(pages)/mint/ChoosePetMint";
+import { IPetByOwner, IPets } from "@/app/(pages)/mint/ChoosePetMint";
 
 const PetView = ({
   pets,
-  currentPet,
   setCurrentPet,
 }: {
-  pets: IPets[];
-  currentPet: IPets | null;
-  setCurrentPet: (pets: IPets) => void;
+  pets: IPetByOwner[];
+  setCurrentPet: (pets: IPetByOwner) => void;
 }) => {
 
   const [api, setApi] = React.useState<CarouselApi>();
@@ -34,23 +32,18 @@ const PetView = ({
       return;
     }
 
-    let petCurrentData: IPets;
+    let petCurrentData: IPetByOwner;
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
-    petCurrentData = {
-      ...pets[api.selectedScrollSnap()],
-      id: api.selectedScrollSnap(), // Set id to the selected index
-    };
+    petCurrentData = pets[api.selectedScrollSnap()]
+
     console.log("🚀 ~ React.useEffect ~ petCurrentData:", petCurrentData);
 
     setCurrentPet(petCurrentData);
 
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1);
-      petCurrentData = {
-        ...pets[api.selectedScrollSnap()],
-        id: api.selectedScrollSnap(), // Set id to the selected index
-      };
+      petCurrentData = pets[api.selectedScrollSnap()],
       console.log("🚀 ~ React.useEffect ~ petCurrentData:", petCurrentData);
 
       setCurrentPet(petCurrentData);
@@ -80,20 +73,20 @@ const PetView = ({
           className="w-full"
         >
           <CarouselContent>
-            {pets &&
+            {
               pets.map((pet, index)  => (
               <CarouselItem key={index}>
                 <div className="flex flex-col items-center justify-center">
                   <div className="relative w-[200px] h-[200px]">
                     <Image
                       alt="pet"
-                      src={pet.image ?? imgs_decor.glass_pet_idl}
+                      src={pet._image}
                       sizes="100%"
                       fill
                       objectFit="contain"
                     />
                   </div>
-                  <p className=" text-5xl">{pet.name ?? "Pet Name"}</p>
+                  <p className=" text-5xl">{pet._name ?? "Pet Name"}</p>
                 </div>
               </CarouselItem>
             ))}

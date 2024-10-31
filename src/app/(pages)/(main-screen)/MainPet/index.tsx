@@ -3,15 +3,16 @@ import ButtonSwap from "@/app/(pages)/(main-screen)/MainPet/ButtonSwap";
 import Item from "@/app/(pages)/(main-screen)/MainPet/Item";
 import PetView from "@/app/(pages)/(main-screen)/MainPet/PetView";
 import PriceItem from "@/app/(pages)/(main-screen)/MainPet/PriceItem";
-import { IPets } from "@/app/(pages)/mint/ChoosePetMint";
+import { IPetByOwner, IPets } from "@/app/(pages)/mint/ChoosePetMint";
 import imgs_decor from "@/assets/accessories/Decor";
 import imgs_item from "@/assets/main-screen/Items";
 import imgs_pet_small from "@/assets/pet/PetSmall";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/hooks/use-toast";
 import { addressContracts } from "@/lib/utils";
 import { useAddress, useContract } from "@thirdweb-dev/react";
 import Image, { StaticImageData } from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export interface IItem {
   id: number;
@@ -70,8 +71,10 @@ const PETS: IPets[] = [
 ];
 
 const MainPet = () => {
-  const { contract: contractToken } = useContract(
-   addressContracts.token
+  const { contract: contractToken } = useContract(addressContracts.token);
+
+  const { contract: contractRaiGotchiV2 } = useContract(
+    addressContracts.raiGotchiV2
   );
   const { contract: contractRaiGotchiImmidiateUseItems } = useContract(
     addressContracts.raiGotchiImmidiateUseItems
@@ -79,18 +82,21 @@ const MainPet = () => {
 
   const address = useAddress();
 
-  const [currentPet, setCurrentPet] = React.useState<IPets | null>(null);
+  const [currentPet, setCurrentPet] = React.useState<IPetByOwner | null>(null);
+  const [petsByOwner, setPetsByOwner] = React.useState<IPetByOwner[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   const handleApprove = async (IdItem: any) => {
     try {
       if (!contractToken) return;
-      const spenderRaiGotchiImmidiateUseItems = addressContracts.raiGotchiImmidiateUseItems;
+      const spenderRaiGotchiImmidiateUseItems =
+        addressContracts.raiGotchiImmidiateUseItems;
       const amountAllowance = await contractToken.call("allowance", [
         address,
         spenderRaiGotchiImmidiateUseItems,
       ]);
       console.log("🚀 ~ handleApprove ~ amountAllowance:", amountAllowance);
-      if (Number(amountAllowance) <= 0) {
+      if (Number(amountAllowance) < 10) {
         const approve = await contractToken.call("approve", [
           spenderRaiGotchiImmidiateUseItems,
           "10000000000000000000",
@@ -101,15 +107,9 @@ const MainPet = () => {
           description: "Approve successfully",
         });
 
-        handleBuyImidiateUseItem(IdItem)
-        toast({
-          title: "Buy item",
-          description: "Buy item successfully",
-        });
-
+        handleBuyImidiateUseItem(IdItem);
       } else {
-        handleBuyImidiateUseItem(IdItem)
-      
+        handleBuyImidiateUseItem(IdItem);
       }
     } catch (error) {
       console.log("🚀 ~ handleApprove ~ error:", error);
@@ -121,90 +121,243 @@ const MainPet = () => {
       if (!contractRaiGotchiImmidiateUseItems) return;
       const buyItem = await contractRaiGotchiImmidiateUseItems.call(
         "buyImidiateUseItem",
-        [5, IdItem]
-      );  
+        [currentPet?._id, IdItem]
+      );
       console.log("🚀 ~ handle Buy ~ buy:", buyItem);
       toast({
         title: "Buy Item",
         description: "Buy item successfully",
       });
+      handleConsumeItem(IdItem);
     } catch (error) {
       console.log("🚀 ~ handle Buy ~ error:", error);
     }
   };
 
+  const handleConsumeItem = async (IdItem: any) => {
+    try {
+      if (!contractRaiGotchiImmidiateUseItems) return;
+      const consumeItem = await contractRaiGotchiImmidiateUseItems.call(
+        "consumeItem",
+        [currentPet?._id, IdItem]
+      );
+      console.log("��� ~ handleConsume ~ consume:", consumeItem);
+      toast({
+        title: "Consume Item",
+        description: "Consume item successfully",
+      });
+      handleGetInforByOwner();
+    } catch (error) {
+      console.log("��� ~ handleConsume ~ error:", error);
+    }
+  };
+
+  const handleGetInforByOwner = async () => {
+    try {
+      if (!contractRaiGotchiV2 || !address) return;
+
+      const petsByOwnerIds = await contractRaiGotchiV2.call("getPetsByOwner", [
+        address,
+      ]);
+      if (!petsByOwnerIds || petsByOwnerIds.length === 0) {
+        setPetsByOwner([]);
+        setLoading(false);
+        return;
+      }
+
+      const fetchedData = await Promise.all(
+        petsByOwnerIds.map(async (element: any) => {
+          const data = await contractRaiGotchiV2.call("getPetInfo", [
+            Number(element),
+          ]);
+          const image = await contractRaiGotchiV2.call("getPetImage", [
+            Number(element),
+          ]);
+          return {
+            ...data,
+            _id: Number(element),
+            _image: image,
+          };
+        })
+      );
+
+      setPetsByOwner(fetchedData);
+    } catch (error) {
+      console.log("🚀 ~ handleGetInforByOwner ~ error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    if (contractRaiGotchiV2) {
+      handleGetInforByOwner();
+    }
+  }, [contractRaiGotchiV2]);
+
   return (
     <div className="w-full h-full flex flex-col gap-5 ">
-      {/* Pet */}
-      <PetView
-        pets={PETS}
-        currentPet={currentPet}
-        setCurrentPet={setCurrentPet}
-      />
-      {/* Profile */}
-      <div className="w-full px-2">
-        <div
-          className="flex  w-full h-[140px] bg-no-repeat py-5 px-3 sm:pl-5 sm:pr-8 gap-3 "
-          style={{
-            backgroundSize: "100% 100%",
-            objectFit: "fill",
-            backgroundImage: `url('/Pet_Tab_Bg.png')`,
-          }}
-        >
-          <div
-            className="flex  items-center justify-center max-w-[110px] h-[90px] w-full bg-no-repeat"
-            style={{
-              backgroundSize: "100% 100%",
-              objectFit: "fill",
-              backgroundImage: `url('/Pet_Tab_Box.png')`,
-            }}
-          >
-            <div className="relative w-full h-[75px]">
-              <Image
-                alt="pet"
-                src={currentPet?.image ?? imgs_pet_small.img_rail_small}
-                sizes="100%"
-                fill
-                objectFit="contain"
-                style={{ transform: "scale(-1, 1)" }}
-              />
-            </div>
-          </div>
-
-          <div className="w-full text-white flex flex-col   font-bold text-xl sm:text-[40px] leading-7">
-            <p className="">{currentPet?.name}</p>
-            <div className="flex gap-5 ">
-              <p>ATK: {currentPet?.attackPoints}</p>
-              <p>STATUS: HAPPY</p>
-            </div>
-            <div className="flex gap-5">
-              <p>DEF: {currentPet?.defensePoints}</p>
-              <p>SCORE: 0</p>
-            </div>
-          </div>
-
-          <ButtonSwap />
+      {petsByOwner.length <= 0 ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <Spinner />
         </div>
-      </div>
+      ) : (
+        <>
+          {/* Pet */}
 
-      {/* Shop */}
-      <div className="w-full px-2">
-        <div
-          className=" w-full h-[220px] bg-no-repeat px-3 py-8 sm:px-10 gap-2"
-          style={{
-            backgroundSize: "100% 100%",
-            objectFit: "fill",
-            backgroundImage: `url('/Shop_Tab.png')`,
-          }}
-        >
-          <div className="flex gap-2 sm:gap-6">
-            {ITEMS.map((item, index) => (
-              <Item key={index} item={item}  handleBuyImidiateUseItem={handleApprove}/>
-            ))}
+          <PetView pets={petsByOwner} setCurrentPet={setCurrentPet} />
+          {/* Profile */}
+          <div className="w-full px-2">
+            <div
+              className="flex  w-full h-[140px] bg-no-repeat py-5 px-3 sm:pl-5 sm:pr-8 gap-3 "
+              style={{
+                backgroundSize: "100% 100%",
+                objectFit: "fill",
+                backgroundImage: `url('/Pet_Tab_Bg.png')`,
+              }}
+            >
+              <div
+                className="flex  items-center justify-center max-w-[110px] h-[90px] w-full bg-no-repeat"
+                style={{
+                  backgroundSize: "100% 100%",
+                  objectFit: "fill",
+                  backgroundImage: `url('/Pet_Tab_Box.png')`,
+                }}
+              >
+                <div className="relative w-full h-[75px]">
+                  <Image
+                    alt="pet"
+                    src={currentPet?._image ?? imgs_pet_small.img_rail_small}
+                    sizes="100%"
+                    fill
+                    objectFit="contain"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full text-white flex flex-col  font-bold text-xl sm:text-[40px] leading-7">
+                <p className="">{currentPet?._name || "PET NAME"}</p>
+                <div className="flex gap-5 ">
+                  <p>ATK: 100</p>
+                  <p>STATUS: {currentPet?._status ?? "HAPPY"}</p>
+                </div>
+                <div className="flex gap-5">
+                  <p>DEF: 50</p>
+                  <p>SCORE: {Number(currentPet?._score) ?? "0"}</p>
+                </div>
+              </div>
+
+              <ButtonSwap />
+            </div>
           </div>
-        </div>
-      </div>
+
+          {/* Shop */}
+          <div className="w-full px-2">
+            <div
+              className=" w-full h-[220px] bg-no-repeat px-3 py-8 sm:px-10 gap-2"
+              style={{
+                backgroundSize: "100% 100%",
+                objectFit: "fill",
+                backgroundImage: `url('/Shop_Tab.png')`,
+              }}
+            >
+              <div className="flex gap-2 sm:gap-6">
+                {ITEMS.map((item, index) => (
+                  <Item
+                    key={index}
+                    item={item}
+                    handleBuyImidiateUseItem={handleApprove}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
+    //     <div className="w-full h-full flex flex-col gap-5 ">
+    //       {
+    //         petsByOwner.length <= 0 ? (
+    // <div className="w-full h-full flex items-center justify-center">
+    // <Spinner/>
+    // </div>
+
+    //         ) : (
+    //           <>
+    //               {/* Pet */}
+
+    //       <PetView
+    //         pets={petsByOwner}
+
+    //         setCurrentPet={setCurrentPet}
+    //       />
+    //       {/* Profile */}
+    //       <div className="w-full px-2">
+    //         <div
+    //           className="flex  w-full h-[140px] bg-no-repeat py-5 px-3 sm:pl-5 sm:pr-8 gap-3 "
+    //           style={{
+    //             backgroundSize: "100% 100%",
+    //             objectFit: "fill",
+    //             backgroundImage: `url('/Pet_Tab_Bg.png')`,
+    //           }}
+    //         >
+    //           <div
+    //             className="flex  items-center justify-center max-w-[110px] h-[90px] w-full bg-no-repeat"
+    //             style={{
+    //               backgroundSize: "100% 100%",
+    //               objectFit: "fill",
+    //               backgroundImage: `url('/Pet_Tab_Box.png')`,
+    //             }}
+    //           >
+    //             <div className="relative w-full h-[75px]">
+    //               <Image
+    //                 alt="pet"
+    //                 src={currentPet?._image ?? imgs_pet_small.img_rail_small}
+    //                 sizes="100%"
+    //                 fill
+    //                 objectFit="contain"
+
+    //               />
+    //             </div>
+    //           </div>
+
+    //           <div className="w-full text-white flex flex-col   font-bold text-xl sm:text-[40px] leading-7">
+    //             <p className="">{currentPet?._name}</p>
+    //             <div className="flex gap-5 ">
+    //               <p>ATK: 100</p>
+    //               <p>STATUS: {currentPet?._status ?? 'HAPPY'}</p>
+    //             </div>
+    //             <div className="flex gap-5">
+    //               <p>DEF: 50</p>
+    //               <p>SCORE: {currentPet?._score ?? '0'}</p>
+    //             </div>
+    //           </div>
+
+    //           <ButtonSwap />
+    //         </div>
+    //       </div>
+
+    //       {/* Shop */}
+    //       <div className="w-full px-2">
+    //         <div
+    //           className=" w-full h-[220px] bg-no-repeat px-3 py-8 sm:px-10 gap-2"
+    //           style={{
+    //             backgroundSize: "100% 100%",
+    //             objectFit: "fill",
+    //             backgroundImage: `url('/Shop_Tab.png')`,
+    //           }}
+    //         >
+    //           <div className="flex gap-2 sm:gap-6">
+    //             {ITEMS.map((item, index) => (
+    //               <Item key={index} item={item}  handleBuyImidiateUseItem={handleApprove}/>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       </div>
+    //           </>
+    //         )
+    //       }
+    //     </div>
   );
 };
 
