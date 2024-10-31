@@ -71,6 +71,11 @@ const config: Config = {
 			'mint_menu_choose_pet_stats_tab':"url('/Mint_Menu_Choose_Pet_Stats_Tab.png')",
 			'scroll_button_blue':"url('/Scroll_Button_Blue.png')",
 			'scrool_slide_bar_blue':"url('/Scrool_Slide_Bar_Blue.png')",
+			'pet_select_bottom_tab':"url('/Pet_Select_Bottom_Tab.png')",
+			'pet_select_main_info':"url('/Pet_Select_Main_Info.png')",
+			'pet_select_main_tab':"url('/Pet_Select_Main_Tab.png')",
+			'pet_select_bottom_active':"url('/Pet_Select_Bottom_Active.png')",
+			'user_screen_box':"url('/User_Screen_Box.png')",
 
 
 

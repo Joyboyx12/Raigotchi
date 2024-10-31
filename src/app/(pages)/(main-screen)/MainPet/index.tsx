@@ -3,11 +3,11 @@ import ButtonSwap from "@/app/(pages)/(main-screen)/MainPet/ButtonSwap";
 import Item from "@/app/(pages)/(main-screen)/MainPet/Item";
 import PetView from "@/app/(pages)/(main-screen)/MainPet/PetView";
 import PriceItem from "@/app/(pages)/(main-screen)/MainPet/PriceItem";
-import { IPetByOwner, IPets } from "@/app/(pages)/mint/ChoosePetMint";
 import imgs_decor from "@/assets/accessories/Decor";
 import imgs_item from "@/assets/main-screen/Items";
 import imgs_pet_small from "@/assets/pet/PetSmall";
 import { Spinner } from "@/components/ui/spinner";
+import { IPets, useAppContext } from "@/contexts/AppContext";
 import { toast } from "@/hooks/use-toast";
 import { addressContracts } from "@/lib/utils";
 import { useAddress, useContract } from "@thirdweb-dev/react";
@@ -73,18 +73,15 @@ const PETS: IPets[] = [
 const MainPet = () => {
   const { contract: contractToken } = useContract(addressContracts.token);
 
-  const { contract: contractRaiGotchiV2 } = useContract(
-    addressContracts.raiGotchiV2
-  );
   const { contract: contractRaiGotchiImmidiateUseItems } = useContract(
     addressContracts.raiGotchiImmidiateUseItems
   );
 
   const address = useAddress();
 
-  const [currentPet, setCurrentPet] = React.useState<IPetByOwner | null>(null);
-  const [petsByOwner, setPetsByOwner] = React.useState<IPetByOwner[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(true);
+ const {petsByOwner,setCurrentPet,currentPet, handleGetInforByOwner} = useAppContext()
+ 
+
 
   const handleApprove = async (IdItem: any) => {
     try {
@@ -152,57 +149,8 @@ const MainPet = () => {
     }
   };
 
-  const handleGetInforByOwner = async () => {
-    try {
-      if (!contractRaiGotchiV2 || !address) return;
+ 
 
-      const petsByOwnerIds = await contractRaiGotchiV2.call("getPetsByOwner", [
-        address,
-      ]);
-      if (!petsByOwnerIds || petsByOwnerIds.length === 0) {
-        setPetsByOwner([]);
-        setLoading(false);
-        return;
-      }
-
-      const fetchedData = await Promise.all(
-        petsByOwnerIds.map(async (element: any) => {
-          const data = await contractRaiGotchiV2.call("getPetInfo", [
-            Number(element),
-          ]);
-          const image = await contractRaiGotchiV2.call("getPetImage", [
-            Number(element),
-          ]);
-          const attack = await contractRaiGotchiV2.call("getPetAttackPoints", [
-            Number(element),
-          ]);
-          const def = await contractRaiGotchiV2.call("getPetDefensePoints", [
-            Number(element),
-          ]);
-         
-          return {
-            ...data,
-            _id: Number(element),
-            _image: image,
-            _attackPoints: attack,
-            _defensePoints: def,
-          };
-        })
-      );
-
-      setPetsByOwner(fetchedData);
-    } catch (error) {
-      console.log("🚀 ~ handleGetInforByOwner ~ error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    if (contractRaiGotchiV2) {
-      handleGetInforByOwner();
-    }
-  }, [contractRaiGotchiV2]);
 
   return (
     <div className="w-full h-full flex flex-col gap-5 ">

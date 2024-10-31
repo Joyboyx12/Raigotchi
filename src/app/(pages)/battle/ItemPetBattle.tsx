@@ -1,10 +1,11 @@
 import PriceItemAccessorie from '@/app/(pages)/accessories/PriceItemAccessorie'
+import imgs_battle from '@/assets/battle-screen/Battle'
 import imgs_select_pet_battle from '@/assets/battle-screen/PetSelect'
 import imgs_main_screen from '@/assets/main-screen'
 import Image, { StaticImageData } from 'next/image'
 import React from 'react'
 
-const ItemPetMint = ({isDead,typeBox, img}: { isDead:any,typeBox?: string, img: StaticImageData | string}) => {
+const ItemPetBattle = ({isDead, typeBox, img}: {isDead:any, typeBox?: string, img: StaticImageData | string}) => {
   return (
 <div className='flex flex-col gap-1 items-center w-[100px]  py-1 flex-shrink-0'>
 <div className="relative w-full h-[70px] bg-no-repeat"
@@ -27,7 +28,7 @@ const ItemPetMint = ({isDead,typeBox, img}: { isDead:any,typeBox?: string, img: 
     style={{
       backgroundSize: "100% 100%",
       objectFit: "fill",
-      backgroundImage: `url('Price_Box_2.png')`,
+      backgroundImage: `url('Pet_Select_Bottom_Active.png')`,
     }}
   >
     
@@ -42,4 +43,4 @@ const ItemPetMint = ({isDead,typeBox, img}: { isDead:any,typeBox?: string, img: 
   )
 }
 
-export default ItemPetMint
+export default ItemPetBattle
