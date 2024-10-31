@@ -3,10 +3,10 @@ import imgs_main_screen from '@/assets/main-screen'
 import Image, { StaticImageData } from 'next/image'
 import React from 'react'
 
-const ItemPetMint = ({typeBox, img}: {typeBox?: string, img: StaticImageData}) => {
+const ItemPetMint = ({typeBox, img}: {typeBox?: string, img: StaticImageData | string}) => {
   return (
-<div className='flex flex-col gap-1 items-center max-w-[90px] w-full '>
-<div className="relative w-full h-[60px] sm:h-[90px] bg-no-repeat"
+<div className='flex flex-col gap-1 items-center w-[100px]  py-1 flex-shrink-0'>
+<div className="relative w-full h-[70px] bg-no-repeat"
     style={{
       backgroundSize: "100% 100%",
       objectFit: "fill",
@@ -22,7 +22,7 @@ const ItemPetMint = ({typeBox, img}: {typeBox?: string, img: StaticImageData}) =
       />
     </div>
     <div
-    className="relative max-w-[70px] w-full h-[30px] bg-no-repeat flex items-center justify-center px-2"
+    className="relative max-w-[70px] w-full h-[25px] bg-no-repeat flex items-center justify-center px-2"
     style={{
       backgroundSize: "100% 100%",
       objectFit: "fill",

@@ -6,10 +6,12 @@ import imgs_mint from "@/assets/mint-screen/Assets";
 import imgs_pet_small from "@/assets/pet/PetSmall";
 import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/hooks/use-toast";
+import { addressContracts } from "@/lib/utils";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
+import "./styles.css";
 
 export interface IPets {
   id: number;
@@ -18,6 +20,18 @@ export interface IPets {
   attackPoints: any;
   defensePoints: any;
   nextEvolutionLevel: any;
+}
+
+export interface IPetByOwner {
+  _image: string;
+  _name: string;
+  _status: any;
+  _score: any;
+  _level: any;
+  _timeUntilStarving: any;
+  _owner: any;
+  _rewards: any;
+  _genes: string;
 }
 
 const PETS: IPets[] = [
@@ -42,33 +56,25 @@ const PETS: IPets[] = [
 const ChoosePetMint = () => {
   const address = useAddress();
 
-  const { contract } = useContract(
-    "0xB76dA29352313F63cCac626e909FfeA184090De8"
-  );
+  const { contract: contractGenePoll } = useContract(addressContracts.genePool);
 
-  const { contract: contractToken } = useContract(
-    "0x88858f9f3ed8950Bd190964483Eb4d19D1223c11"
-  );
+  const { contract: contractToken } = useContract(addressContracts.token);
 
   const { contract: contractRaiGotchiV2 } = useContract(
-    "0x20A510B6CfC6Df6151C3b41F5897E31E054a92f4"
+    addressContracts.raiGotchiV2
   );
 
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const [currentPet, setCurrentPet] = React.useState<IPets | null>(null);
 
- 
   const [speciesData, setSpeciesData] = useState<IPets[]>([]);
+  const [petsByOwner, setPetsByOwner] = useState<IPetByOwner[]>([]);
 
   const handleGetSpeciesEvolutionPhaseInfo = async () => {
-    if (!contract) return;
+    if (!contractGenePoll) return;
 
-    let speciesCount = await contract.call("speciesCount");
-    console.log(
-      "🚀 ~ handleGetSpeciesEvolutionPhaseInfo ~ speciesCount:",
-      speciesCount
-    );
+    let speciesCount = await contractGenePoll.call("speciesCount");
 
     if (!speciesCount) return; // Add check for contract1
 
@@ -76,11 +82,10 @@ const ChoosePetMint = () => {
 
     for (let i = 0; i < Number(speciesCount); i++) {
       try {
-        const data = await contract.call("getSpeciesEvolutionPhaseInfo", [
-          i,
-          0,
-        ]);
-        console.log("🚀 ~ handleGetSpeciesEvolutionPhaseInfo ~ data:", data);
+        const data = await contractGenePoll.call(
+          "getSpeciesEvolutionPhaseInfo",
+          [i, 0]
+        );
         fetchedData.push(data as IPets);
       } catch (error) {
         console.error(`Error fetching data for species ${i}:`, error);
@@ -90,16 +95,61 @@ const ChoosePetMint = () => {
     setSpeciesData(fetchedData);
   };
 
+  const handleGetInforByOwner = async () => {
+    try {
+      if (!contractRaiGotchiV2) return;
+
+      let petsByOwner = await contractRaiGotchiV2.call("getPetsByOwner", [
+        address,
+      ]);
+      console.log("🚀 ~ handleGetInforByOwner ~ address:", address);
+      console.log("🚀 ~ handleGetInforByOwner ~ petsByOwner:", petsByOwner);
+
+      if (!petsByOwner) return; // Add check for contract1
+
+      const fetchedData: IPetByOwner[] = [];
+
+      petsByOwner.forEach(async (element: any) => {
+        const data = await contractRaiGotchiV2.call("getPetInfo", [
+          Number(element),
+        ]);
+        const image = await contractRaiGotchiV2.call("getPetImage", [
+          Number(element),
+        ]);
+       
+
+        fetchedData.push({
+          ...data,
+          _image: image,
+        });
+      });
+      console.log("🚀 ~ handleGetInforByOwner ~ fetchedData:", fetchedData);
+
+      setPetsByOwner(fetchedData);
+    } catch (error) {
+      console.log("🚀 ~ handleGetInforByOwner ~ error:", error);
+    }
+  };
+
   const handleCheckMint = async () => {
     try {
-      if (!contract) return;
+      if (!contractGenePoll) return;
 
-      let speciesMaxPopulation = await contract.call("speciesMaxPopulation", [
-        currentPet?.id,
-      ]);
-      let currentSpeciesPopulation = await contract.call(
+      let speciesMaxPopulation = await contractGenePoll.call(
+        "speciesMaxPopulation",
+        [currentPet?.id]
+      );
+      console.log(
+        "🚀 ~ handleCheckMint ~ speciesMaxPopulation:",
+        speciesMaxPopulation
+      );
+      let currentSpeciesPopulation = await contractGenePoll.call(
         "currentSpeciesPopulation",
         [currentPet?.id]
+      );
+      console.log(
+        "🚀 ~ handleCheckMint ~ currentSpeciesPopulation:",
+        currentSpeciesPopulation
       );
 
       if (!speciesMaxPopulation && !currentSpeciesPopulation) return;
@@ -117,13 +167,13 @@ const ChoosePetMint = () => {
   const handleApprove = async () => {
     try {
       if (!contractToken) return;
-      const spender = "0x20A510B6CfC6Df6151C3b41F5897E31E054a92f4";
+      const spender = addressContracts.raiGotchiV2;
       const amountAllowance = await contractToken.call("allowance", [
         address,
         spender,
       ]);
       console.log("🚀 ~ handleApprove ~ amountAllowance:", amountAllowance);
-      if (Number(amountAllowance) <= 0) {
+      if (Number(amountAllowance) < 10) {
         const approve = await contractToken.call("approve", [
           spender,
           "10000000000000000000",
@@ -132,7 +182,8 @@ const ChoosePetMint = () => {
         toast({
           title: "Approve",
           description: "Approve successfully",
-        })
+        });
+        handleMintPet();
       } else {
         handleMintPet();
       }
@@ -149,18 +200,20 @@ const ChoosePetMint = () => {
       toast({
         title: "Mint Pet",
         description: "Mint pet successfully",
-      })
+      });
+      handleGetInforByOwner();
     } catch (error) {
       console.log("🚀 ~ handleMintPet ~ error:", error);
     }
   };
 
   useEffect(() => {
-    if (contract) {
+    if (contractGenePoll) {
       // Ensure contract1 is defined before calling
       handleGetSpeciesEvolutionPhaseInfo();
+      handleGetInforByOwner();
     }
-  }, [contract]);
+  }, [contractGenePoll]);
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full h-full px-2">
       {speciesData.length <= 0 ? (
@@ -172,15 +225,29 @@ const ChoosePetMint = () => {
             setCurrentPet={setCurrentPet}
             currentPet={currentPet}
           />
+
           <div
-            className="w-full h-[280px] bg-no-repeat px-6 py-7"
+            className="w-full h-[280px]  bg-no-repeat p-6"
             style={{
               backgroundSize: "100% 100%",
               objectFit: "fill",
               backgroundImage: `url('/Shop_Decorations_Menu.png')`,
             }}
           >
-            <ItemPetMint img={imgs_pet_small.img_base_small} />
+            <div className="w-full h-full grid grid-rows-2 grid-flow-col gap-2 overflow-x-auto custom-scrollbar">
+              {petsByOwner.length <= 0 ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <Spinner />
+                </div>
+              ) : (
+                petsByOwner.map((pet, index) => (
+                  <ItemPetMint
+                    key={index}
+                    img={pet._image || imgs_pet_small.img_base_small}
+                  />
+                ))
+              )}
+            </div>
           </div>
           <button onClick={handleCheckMint}>
             <Image

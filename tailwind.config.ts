@@ -69,6 +69,8 @@ const config: Config = {
 			'user_invite_tab':"url('/User_Screen_Invite_Tab.png')",
 			'mint_menu_choose_pet_tab':"url('/Mint_Menu_Choose_Pet_Tab.png')",
 			'mint_menu_choose_pet_stats_tab':"url('/Mint_Menu_Choose_Pet_Stats_Tab.png')",
+			'scroll_button_blue':"url('/Scroll_Button_Blue.png')",
+			'scrool_slide_bar_blue':"url('/Scrool_Slide_Bar_Blue.png')",
 
 
 

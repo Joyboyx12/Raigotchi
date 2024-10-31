@@ -1,0 +1,22 @@
+
+.custom-scrollbar {
+    overflow-x: auto;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px; /* Chiều cao thanh cuộn */
+    
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: url('/Scrool_Slide_Bar_Blue.png') no-repeat center center;
+    background-size: cover; /* Để hình ảnh phủ kín vùng track */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Màu sắc của thanh cuộn */
+    border-radius: 10px;
+    background-image: url('/Scroll_Button_Blue.png');
+    background-size: cover; /* Để hình ảnh phủ kín thanh cuộn */
+    min-width: 60px; /* Chiều dài tối thiểu của thanh cuộn */
+  max-width: 60px; /* Chiều dài tối đa của thanh cuộn */
+  }

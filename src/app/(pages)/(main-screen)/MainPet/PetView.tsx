@@ -4,13 +4,59 @@ import React from "react";
 
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { IPets } from "@/app/(pages)/mint/ChoosePetMint";
 
-const PetView = () => {
+const PetView = ({
+  pets,
+  currentPet,
+  setCurrentPet,
+}: {
+  pets: IPets[];
+  currentPet: IPets | null;
+  setCurrentPet: (pets: IPets) => void;
+}) => {
+
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+    if (!pets) {
+      return;
+    }
+
+    let petCurrentData: IPets;
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+    petCurrentData = {
+      ...pets[api.selectedScrollSnap()],
+      id: api.selectedScrollSnap(), // Set id to the selected index
+    };
+    console.log("🚀 ~ React.useEffect ~ petCurrentData:", petCurrentData);
+
+    setCurrentPet(petCurrentData);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+      petCurrentData = {
+        ...pets[api.selectedScrollSnap()],
+        id: api.selectedScrollSnap(), // Set id to the selected index
+      };
+      console.log("🚀 ~ React.useEffect ~ petCurrentData:", petCurrentData);
+
+      setCurrentPet(petCurrentData);
+    });
+  }, [api, pets, setCurrentPet]);
+
   return (
     <div
       className="w-full h-[300px] bg-no-repeat flex flex-col items-center justify-center text-white "
@@ -26,6 +72,7 @@ const PetView = () => {
 
       <div className="w-full h-full px-20">
         <Carousel
+         setApi={setApi}
           opts={{
             align: "start",
             loop: true,
@@ -33,19 +80,20 @@ const PetView = () => {
           className="w-full"
         >
           <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {pets &&
+              pets.map((pet, index)  => (
               <CarouselItem key={index}>
                 <div className="flex flex-col items-center justify-center">
                   <div className="relative w-[200px] h-[200px]">
                     <Image
                       alt="pet"
-                      src={imgs_decor.glass_pet_idl}
+                      src={pet.image ?? imgs_decor.glass_pet_idl}
                       sizes="100%"
                       fill
                       objectFit="contain"
                     />
                   </div>
-                  <p className=" text-5xl">Pet Name</p>
+                  <p className=" text-5xl">{pet.name ?? "Pet Name"}</p>
                 </div>
               </CarouselItem>
             ))}
