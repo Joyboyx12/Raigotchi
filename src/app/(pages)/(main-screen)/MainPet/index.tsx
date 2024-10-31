@@ -173,10 +173,19 @@ const MainPet = () => {
           const image = await contractRaiGotchiV2.call("getPetImage", [
             Number(element),
           ]);
+          const attack = await contractRaiGotchiV2.call("getPetAttackPoints", [
+            Number(element),
+          ]);
+          const def = await contractRaiGotchiV2.call("getPetDefensePoints", [
+            Number(element),
+          ]);
+         
           return {
             ...data,
             _id: Number(element),
             _image: image,
+            _attackPoints: attack,
+            _defensePoints: def,
           };
         })
       );
@@ -238,11 +247,11 @@ const MainPet = () => {
               <div className="w-full text-white flex flex-col  font-bold text-xl sm:text-[40px] leading-7">
                 <p className="">{currentPet?._name || "PET NAME"}</p>
                 <div className="flex gap-5 ">
-                  <p>ATK: 100</p>
+                  <p>ATK:  {Number(currentPet?._attackPoints) ?? "0"}</p>
                   <p>STATUS: {currentPet?._status ?? "HAPPY"}</p>
                 </div>
                 <div className="flex gap-5">
-                  <p>DEF: 50</p>
+                  <p>DEF:  {Number(currentPet?._defensePoints) ?? "0"}</p>
                   <p>SCORE: {Number(currentPet?._score) ?? "0"}</p>
                 </div>
               </div>
@@ -275,89 +284,7 @@ const MainPet = () => {
         </>
       )}
     </div>
-    //     <div className="w-full h-full flex flex-col gap-5 ">
-    //       {
-    //         petsByOwner.length <= 0 ? (
-    // <div className="w-full h-full flex items-center justify-center">
-    // <Spinner/>
-    // </div>
-
-    //         ) : (
-    //           <>
-    //               {/* Pet */}
-
-    //       <PetView
-    //         pets={petsByOwner}
-
-    //         setCurrentPet={setCurrentPet}
-    //       />
-    //       {/* Profile */}
-    //       <div className="w-full px-2">
-    //         <div
-    //           className="flex  w-full h-[140px] bg-no-repeat py-5 px-3 sm:pl-5 sm:pr-8 gap-3 "
-    //           style={{
-    //             backgroundSize: "100% 100%",
-    //             objectFit: "fill",
-    //             backgroundImage: `url('/Pet_Tab_Bg.png')`,
-    //           }}
-    //         >
-    //           <div
-    //             className="flex  items-center justify-center max-w-[110px] h-[90px] w-full bg-no-repeat"
-    //             style={{
-    //               backgroundSize: "100% 100%",
-    //               objectFit: "fill",
-    //               backgroundImage: `url('/Pet_Tab_Box.png')`,
-    //             }}
-    //           >
-    //             <div className="relative w-full h-[75px]">
-    //               <Image
-    //                 alt="pet"
-    //                 src={currentPet?._image ?? imgs_pet_small.img_rail_small}
-    //                 sizes="100%"
-    //                 fill
-    //                 objectFit="contain"
-
-    //               />
-    //             </div>
-    //           </div>
-
-    //           <div className="w-full text-white flex flex-col   font-bold text-xl sm:text-[40px] leading-7">
-    //             <p className="">{currentPet?._name}</p>
-    //             <div className="flex gap-5 ">
-    //               <p>ATK: 100</p>
-    //               <p>STATUS: {currentPet?._status ?? 'HAPPY'}</p>
-    //             </div>
-    //             <div className="flex gap-5">
-    //               <p>DEF: 50</p>
-    //               <p>SCORE: {currentPet?._score ?? '0'}</p>
-    //             </div>
-    //           </div>
-
-    //           <ButtonSwap />
-    //         </div>
-    //       </div>
-
-    //       {/* Shop */}
-    //       <div className="w-full px-2">
-    //         <div
-    //           className=" w-full h-[220px] bg-no-repeat px-3 py-8 sm:px-10 gap-2"
-    //           style={{
-    //             backgroundSize: "100% 100%",
-    //             objectFit: "fill",
-    //             backgroundImage: `url('/Shop_Tab.png')`,
-    //           }}
-    //         >
-    //           <div className="flex gap-2 sm:gap-6">
-    //             {ITEMS.map((item, index) => (
-    //               <Item key={index} item={item}  handleBuyImidiateUseItem={handleApprove}/>
-    //             ))}
-    //           </div>
-    //         </div>
-    //       </div>
-    //           </>
-    //         )
-    //       }
-    //     </div>
+  
   );
 };
 

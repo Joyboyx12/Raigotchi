@@ -33,6 +33,8 @@ export interface IPetByOwner {
   _owner: any;
   _rewards: any;
   _genes: string;
+  _attackPoints: any;
+  _defensePoints: any;
 }
 
 const PETS: IPets[] = [
@@ -117,12 +119,21 @@ const ChoosePetMint = () => {
         const image = await contractRaiGotchiV2.call("getPetImage", [
           Number(element),
         ]);
+
+        const attack = await contractRaiGotchiV2.call("getPetAttackPoints", [
+          Number(element),
+        ]);
+        const def = await contractRaiGotchiV2.call("getPetDefensePoints", [
+          Number(element),
+        ]);
        
 
         fetchedData.push({
           ...data,
           _id: Number(element),
           _image: image,
+          _attackPoints: attack,
+          _defensePoints: def,
         });
       });
       console.log("🚀 ~ handleGetInforByOwner ~ fetchedData:", fetchedData);
