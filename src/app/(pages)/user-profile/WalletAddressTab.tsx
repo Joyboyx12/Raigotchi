@@ -1,10 +1,11 @@
 'use client'
+import { addressContracts } from '@/lib/utils';
 import { shortenIfAddress, useAddress, useContract, useContractRead } from '@thirdweb-dev/react';
 import React from 'react'
 
 const WalletAddressTab = () => {
     const address = useAddress();
-    const { contract } = useContract("0x88858f9f3ed8950Bd190964483Eb4d19D1223c11");
+    const { contract } = useContract(addressContracts.token);
     console.log("🚀 ~ WalletAddressTab ~ contract:", contract)
 
 

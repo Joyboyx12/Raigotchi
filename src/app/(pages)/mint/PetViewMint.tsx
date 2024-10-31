@@ -54,7 +54,7 @@ const PetViewMint = ({
 
       setCurrentPet(petCurrentData);
     });
-  }, [api, pets]);
+  }, [api, pets, setCurrentPet]);
 
   return (
     <div
@@ -116,7 +116,6 @@ const PetViewMint = ({
           <CarouselNext className="mx-20" />
         </Carousel>
       </div>
-      <p className="text-4xl">{currentPet && currentPet.name}</p>
     </div>
   );
 };
