@@ -11,13 +11,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { IPetByOwner } from "@/contexts/AppContext";
+import { convertUnixToTime } from "@/lib/utils";
 
 
 const PetView = ({
   pets,
+  currentPet,
   setCurrentPet,
 }: {
   pets: IPetByOwner[];
+  currentPet: IPetByOwner  | null;
   setCurrentPet: (pets: IPetByOwner) => void;
 }) => {
 
@@ -25,6 +28,7 @@ const PetView = ({
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
+ 
   React.useEffect(() => {
     if (!api) {
       return;
@@ -61,7 +65,7 @@ const PetView = ({
       }}
     >
       <div className="w-full flex justify-end px-6">
-        <p className="font-bold text-4xl">TOD: 23h38m25s</p>
+        <p className="font-bold text-4xl">TOD: {convertUnixToTime(Number(currentPet?._timeUntilStarving))} {}</p>
       </div>
 
       <div className="w-full h-full px-20">

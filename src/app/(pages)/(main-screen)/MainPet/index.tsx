@@ -162,7 +162,7 @@ const MainPet = () => {
         <>
           {/* Pet */}
 
-          <PetView pets={petsByOwner} setCurrentPet={setCurrentPet} />
+          <PetView pets={petsByOwner} setCurrentPet={setCurrentPet} currentPet={currentPet} />
           {/* Profile */}
           <div className="w-full px-2">
             <div

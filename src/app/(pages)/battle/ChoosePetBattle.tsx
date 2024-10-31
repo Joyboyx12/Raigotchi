@@ -10,7 +10,7 @@ import imgs_mint from "@/assets/mint-screen/Assets";
 import imgs_pet_small from "@/assets/pet/PetSmall";
 import { Spinner } from "@/components/ui/spinner";
 import { IPets, useAppContext } from "@/contexts/AppContext";
-import { useToast } from "@/hooks/use-toast";
+import { toast, useToast } from "@/hooks/use-toast";
 import { addressContracts } from "@/lib/utils";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 
@@ -82,6 +82,13 @@ const ChoosePetBattle = () => {
           </div>
           <button
           onClick={() => {
+            if(currentPet?._status === 4) {
+              toast({
+                title: "Battle Failed",
+               description: "You can't battle with dead pet"
+              })
+              return
+            }
             nextStep()
             console.log("currentPet",currentPet)
           }

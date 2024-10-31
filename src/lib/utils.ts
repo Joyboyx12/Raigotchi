@@ -7,7 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 
 export const statusLabels = ["HAPPY", "HUNGRY", "STARVING", "DYING", "DEAD"];
 
-
+export function convertUnixToTime(unixTime: number) {
+  const date = new Date(unixTime * 1000); // Convert to milliseconds
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const seconds = date.getUTCSeconds();
+  
+  return `${String(hours).padStart(2, '0')}h:${String(minutes).padStart(2, '0')}m:${String(seconds).padStart(2, '0')}s`;
+}
 export const addressContracts = {
   uniswapV2Router02: "0x59e1dBcE58F3216627aE9E81d153EAD040FaCB3a",
   qrngContract: "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd",
