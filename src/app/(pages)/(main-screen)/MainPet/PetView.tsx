@@ -10,7 +10,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { IPetByOwner, IPets } from "@/app/(pages)/mint/ChoosePetMint";
+import { IPetByOwner } from "@/contexts/AppContext";
+
 
 const PetView = ({
   pets,

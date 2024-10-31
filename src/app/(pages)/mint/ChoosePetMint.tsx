@@ -12,31 +12,8 @@ import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { useAppContext } from "@/contexts/AppContext";
+import { IPets, useAppContext } from "@/contexts/AppContext";
 
-export interface IPets {
-  id: number;
-  image: string;
-  name: string;
-  attackPoints: any;
-  defensePoints: any;
-  nextEvolutionLevel: any;
-}
-
-export interface IPetByOwner {
-  _id: number;
-  _image: string;
-  _name: string;
-  _status: any;
-  _score: any;
-  _level: any;
-  _timeUntilStarving: any;
-  _owner: any;
-  _rewards: any;
-  _genes: string;
-  _attackPoints: any;
-  _defensePoints: any;
-}
 
 const PETS: IPets[] = [
   {
@@ -192,6 +169,7 @@ const ChoosePetMint = () => {
               ) : (
                 petsByOwner.map((pet, index) => (
                   <ItemPetMint
+                  isDead={pet._status}
                     key={index}
                     img={pet._image || imgs_pet_small.img_base_small}
                   />

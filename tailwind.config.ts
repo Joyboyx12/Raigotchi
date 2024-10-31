@@ -75,6 +75,7 @@ const config: Config = {
 			'pet_select_main_info':"url('/Pet_Select_Main_Info.png')",
 			'pet_select_main_tab':"url('/Pet_Select_Main_Tab.png')",
 			'pet_select_bottom_active':"url('/Pet_Select_Bottom_Active.png')",
+			'user_screen_box':"url('/User_Screen_Box.png')",
 
 
 

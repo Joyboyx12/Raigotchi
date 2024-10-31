@@ -1,5 +1,5 @@
 "use client";
-import { IPetByOwner, IPets } from "@/app/(pages)/mint/ChoosePetMint";
+
 import imgs_decor from "@/assets/accessories/Decor";
 import {
   Carousel,
@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { IPetByOwner } from "@/contexts/AppContext";
 import Image from "next/image";
 import React, { useState } from "react";
 
