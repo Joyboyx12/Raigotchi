@@ -76,6 +76,9 @@ const config: Config = {
 			'pet_select_main_tab':"url('/Pet_Select_Main_Tab.png')",
 			'pet_select_bottom_active':"url('/Pet_Select_Bottom_Active.png')",
 			'user_screen_box':"url('/User_Screen_Box.png')",
+			'pvp_list_header':"url('/PVP_List_Header.png')",
+			'battle_pvp_list_tab':"url('/Battle_PVP_List_Tab.png')",
+			
 
 
 

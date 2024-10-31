@@ -5,6 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export const statusLabels = ["HAPPY", "HUNGRY", "STARVING", "DYING", "DEAD"];
+
 
 export const addressContracts = {
   uniswapV2Router02: "0x59e1dBcE58F3216627aE9E81d153EAD040FaCB3a",

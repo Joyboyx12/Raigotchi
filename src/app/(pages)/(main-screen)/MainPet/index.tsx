@@ -184,7 +184,7 @@ const MainPet = () => {
                 <div className="relative w-full h-[75px]">
                   <Image
                     alt="pet"
-                    src={currentPet?._image ?? imgs_pet_small.img_rail_small}
+                    src={currentPet?._image || imgs_pet_small.img_rail_small}
                     sizes="100%"
                     fill
                     objectFit="contain"
@@ -195,12 +195,12 @@ const MainPet = () => {
               <div className="w-full text-white flex flex-col  font-bold text-xl sm:text-[40px] leading-7">
                 <p className="">{currentPet?._name || "PET NAME"}</p>
                 <div className="flex gap-5 ">
-                  <p>ATK:  {Number(currentPet?._attackPoints) ?? "0"}</p>
-                  <p>STATUS: {currentPet?._status ?? "HAPPY"}</p>
+                  <p>ATK:  {Number(currentPet?._attackPoints) || "0"}</p>
+                  <p>STATUS: {currentPet?._status || "HAPPY"}</p>
                 </div>
                 <div className="flex gap-5">
-                  <p>DEF:  {Number(currentPet?._defensePoints) ?? "0"}</p>
-                  <p>SCORE: {Number(currentPet?._score) ?? "0"}</p>
+                  <p>DEF:  {Number(currentPet?._defensePoints) || "0"}</p>
+                  <p>SCORE: {Number(currentPet?._score) || "0"}</p>
                 </div>
               </div>
 
