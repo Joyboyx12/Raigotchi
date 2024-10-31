@@ -12,6 +12,7 @@ import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import "./styles.css";
+import { useAppContext } from "@/contexts/AppContext";
 
 export interface IPets {
   id: number;
@@ -69,80 +70,14 @@ const ChoosePetMint = () => {
 
   const { toast } = useToast();
 
-  const [currentPet, setCurrentPet] = React.useState<IPets | null>(null);
-
-  const [speciesData, setSpeciesData] = useState<IPets[]>([]);
-  const [petsByOwner, setPetsByOwner] = useState<IPetByOwner[]>([]);
-
-  const handleGetSpeciesEvolutionPhaseInfo = async () => {
-    if (!contractGenePoll) return;
-
-    let speciesCount = await contractGenePoll.call("speciesCount");
-
-    if (!speciesCount) return; // Add check for contract1
-
-    const fetchedData: IPets[] = [];
-
-    for (let i = 0; i < Number(speciesCount); i++) {
-      try {
-        const data = await contractGenePoll.call(
-          "getSpeciesEvolutionPhaseInfo",
-          [i, 0]
-        );
-        fetchedData.push(data as IPets);
-      } catch (error) {
-        console.error(`Error fetching data for species ${i}:`, error);
-      }
-    }
-
-    setSpeciesData(fetchedData);
-  };
-
-  const handleGetInforByOwner = async () => {
-    try {
-      if (!contractRaiGotchiV2) return;
-
-      let petsByOwner = await contractRaiGotchiV2.call("getPetsByOwner", [
-        address,
-      ]);
-      console.log("🚀 ~ handleGetInforByOwner ~ address:", address);
-      console.log("🚀 ~ handleGetInforByOwner ~ petsByOwner:", petsByOwner);
-
-      if (!petsByOwner) return; // Add check for contract1
-
-      const fetchedData: IPetByOwner[] = [];
-
-      petsByOwner.forEach(async (element: any) => {
-        const data = await contractRaiGotchiV2.call("getPetInfo", [
-          Number(element),
-        ]);
-        const image = await contractRaiGotchiV2.call("getPetImage", [
-          Number(element),
-        ]);
-
-        const attack = await contractRaiGotchiV2.call("getPetAttackPoints", [
-          Number(element),
-        ]);
-        const def = await contractRaiGotchiV2.call("getPetDefensePoints", [
-          Number(element),
-        ]);
-       
-
-        fetchedData.push({
-          ...data,
-          _id: Number(element),
-          _image: image,
-          _attackPoints: attack,
-          _defensePoints: def,
-        });
-      });
-      console.log("🚀 ~ handleGetInforByOwner ~ fetchedData:", fetchedData);
-
-      setPetsByOwner(fetchedData);
-    } catch (error) {
-      console.log("🚀 ~ handleGetInforByOwner ~ error:", error);
-    }
-  };
+  const {
+    petsByOwner,
+    setPetsByOwner,
+    handleGetInforByOwner,
+    speciesData,
+    currentPetSpecies,
+    setCurrentPetSpecies,
+  } = useAppContext();
 
   const handleCheckMint = async () => {
     try {
@@ -150,7 +85,7 @@ const ChoosePetMint = () => {
 
       let speciesMaxPopulation = await contractGenePoll.call(
         "speciesMaxPopulation",
-        [currentPet?.id]
+        [currentPetSpecies?.id]
       );
       console.log(
         "🚀 ~ handleCheckMint ~ speciesMaxPopulation:",
@@ -158,7 +93,7 @@ const ChoosePetMint = () => {
       );
       let currentSpeciesPopulation = await contractGenePoll.call(
         "currentSpeciesPopulation",
-        [currentPet?.id]
+        [currentPetSpecies?.id]
       );
       console.log(
         "🚀 ~ handleCheckMint ~ currentSpeciesPopulation:",
@@ -208,7 +143,9 @@ const ChoosePetMint = () => {
   const handleMintPet = async () => {
     try {
       if (!contractRaiGotchiV2) return;
-      const mint = await contractRaiGotchiV2.call("mint", [currentPet?.id]);
+      const mint = await contractRaiGotchiV2.call("mint", [
+        currentPetSpecies?.id,
+      ]);
       console.log("🚀 ~ handleMintPet ~ mint:", mint);
       toast({
         title: "Mint Pet",
@@ -220,13 +157,13 @@ const ChoosePetMint = () => {
     }
   };
 
-  useEffect(() => {
-    if (contractGenePoll) {
-      // Ensure contract1 is defined before calling
-      handleGetSpeciesEvolutionPhaseInfo();
-      handleGetInforByOwner();
-    }
-  }, [contractGenePoll]);
+  // useEffect(() => {
+  //   if (contractGenePoll) {
+  //     // Ensure contract1 is defined before calling
+  //     handleGetSpeciesEvolutionPhaseInfo();
+
+  //   }
+  // }, [contractGenePoll]);
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full h-full px-2">
       {speciesData.length <= 0 ? (
@@ -235,8 +172,8 @@ const ChoosePetMint = () => {
         <>
           <PetViewMint
             pets={speciesData && speciesData}
-            setCurrentPet={setCurrentPet}
-            currentPet={currentPet}
+            setCurrentPet={setCurrentPetSpecies}
+            currentPet={currentPetSpecies}
           />
 
           <div
