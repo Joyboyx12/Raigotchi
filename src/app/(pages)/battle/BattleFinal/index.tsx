@@ -127,6 +127,7 @@ const BattleFinal = () => {
                 fill
                 objectFit="contain"
                 style={{ transform: "scale(-1, 1)" }}
+               
               />
             </div>
             <div className="relative w-[100px] h-[100px]">
@@ -172,7 +173,6 @@ const BattleFinal = () => {
                     sizes="100%"
                     fill
                     objectFit="contain"
-                    style={{ transform: "scale(-1, 1)" }}
                   />
                 </div>
               </div>
@@ -199,8 +199,8 @@ const BattleFinal = () => {
                     </p>
                   </div>
                   <div className="flex gap-4">
-                    <p>DEF: {Number(currentPet!._defensePoints) || 0}</p>
-                    <p>SCORE: {Number(currentPet!._score) || 0}</p>
+                    <p>DEF: {Number(currentPetFight!._defensePoints) || 0}</p>
+                    <p>SCORE: {Number(currentPetFight!._score) || 0}</p>
                   </div>
                 </div>
               </div>
