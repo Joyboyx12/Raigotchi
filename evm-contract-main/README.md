@@ -1,5 +1,7 @@
 # Raigotchi Contract Address 
 
+# Aurora Testnet 
+
 {
     "uniswapV2Router02": "0x59e1dBcE58F3216627aE9E81d153EAD040FaCB3a",
     "qrngContract": "0xa0AD79D995DdeeB18a14eAef56A549A04e3Aa1Bd",
